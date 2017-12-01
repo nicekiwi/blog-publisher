@@ -1,0 +1,50 @@
+{
+  "name": "blog-publisher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build:live",
+    "build:live": "nodemon --exec node ./index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicekiwi/blog-publisher.git"
+  },
+  "author": "Ezra Sharp <ezra@kiwidev.co.nz>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicekiwi/blog-publisher/issues"
+  },
+  "homepage": "https://github.com/nicekiwi/blog-publisher#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "bcrypt-node": "^0.1.0",
+    "koa": "^2.4.1",
+    "koa-better-router": "^2.1.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compress": "^2.0.0",
+    "koa-logger": "^3.1.0",
+    "koa-mount": "^3.0.0",
+    "koa-passport": "^4.0.1",
+    "koa-router": "^3.2.0",
+    "koa-session": "^5.5.1",
+    "koa-static": "^4.0.2",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "nodemon": "^1.12.1",
+    "sinon": "^4.1.2"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}

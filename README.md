@@ -1,1 +1,1 @@
-# blog-publisher
+blog-consumer
