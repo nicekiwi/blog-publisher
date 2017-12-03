@@ -9,12 +9,10 @@ const admin = {
 
 const strategy = (username, password, done) => {
 
-    if(username !== admin.username) {
-        done(null, false);
-    }
-
-    if(username === admin.username && bcrypt.compareSync(password, admin.password)) {
+    if(username === admin.username || bcrypt.compareSync(password, admin.password)) {
         done(null, { id: 1 });
+    } else {
+        done(null, false);
     }
 };
 

@@ -1,18 +1,11 @@
 
-import lowdb from 'lowdb'
-import AwsStorage from 'lowdb-adapter-aws-s3'
-
-const adapter = new AwsAdapter('db.json', { 
-    defaultValue: {
-        posts: [], tags: []
-    },
-    aws: {
-        
-    }
- })
+import db from '../services/db';
 
 export default {
-    fetch(ctx) {
+    async fetch(ctx) {
 
+        await db;
+
+        ctx.body = await db.get('posts').value()
     }
 }

@@ -4,16 +4,17 @@ import logger from 'koa-logger';
 import serve from 'koa-static';
 import Router from 'koa-better-router';
 import mount from 'koa-mount';
-import path from 'path';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-session';
 import passport from 'koa-passport';
-import posts from './controllers/posts';
+import path from 'path';
 
-import './auth';
+import posts from './controllers/posts';
+import lowdb from './services/db';
+import './services/auth';
 
 const app = new Koa();
-const route = new Router().loadMethods();
+const route = new Router({ prefix: '/api' }).loadMethods();
 const port = process.env.PORT || 3000;
 
 app.keys = [ process.env.SESSION_SECRET || 'secret' ]
@@ -25,16 +26,34 @@ app.use(session({}, app));
 app.use(passport.initialize());
 app.use(passport.session());
 
-route.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'}));
-route.get('/logout', ctx => { ctx.logout() });
+// Enforce Authentication on everything
+app.use((ctx, next) => {
+    if(ctx.isAuthenticated() || ctx.path === '/login') next();
+    else ctx.body = 'fail';
+})
 
-// Routes
-route.get('/', posts.fetch);
+// Auth Routes
+route.post('/login', passport.authenticate('local'));
+route.post('/logout', ctx => ctx.logout());
 
-app.use(route.middleware());
-app.use(serve(path.join(__dirname, 'public')));
-app.use(compress());
+(async () => {
 
-app.listen(port, () => {
-    console.log(`Server listening on port: ${port}.`);
-});
+    const db = await lowdb;
+    const dbData = await db.value();
+    
+    // Routes
+    route.get('/posts', async ctx => ctx.body = await db.get('posts').value())
+    route.get('/tags', async ctx => ctx.body = await db.get('tags').value())
+
+    // init DB, but don't wipe existing data
+    if(!dbData.hasOwnProperty('posts')) 
+        await db.defaults({ posts: [], tags: [] }).write()
+
+    // listen for routes
+    app.use(route.middleware());
+    app.use(serve(path.join(__dirname, 'public')));
+    app.use(compress());
+
+    // start the server
+    app.listen(port, () => console.log(`Server listening on port: ${port}.`));
+})()
