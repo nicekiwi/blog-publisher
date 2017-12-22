@@ -26,18 +26,19 @@
     "babel-register": "^6.26.0",
     "bcrypt-node": "^0.1.0",
     "dotenv": "^4.0.0",
+    "eslint": "^4.13.1",
     "koa": "^2.4.1",
-    "koa-better-router": "^2.1.1",
     "koa-bodyparser": "^4.2.0",
     "koa-compress": "^2.0.0",
     "koa-logger": "^3.1.0",
-    "koa-mount": "^3.0.0",
     "koa-passport": "^4.0.1",
-    "koa-router": "^3.2.0",
+    "koa-router": "^7.3.0",
     "koa-session": "^5.5.1",
     "koa-static": "^4.0.2",
+    "lodash": "^4.17.4",
     "lowdb": "^1.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "jest": "^21.2.1",
