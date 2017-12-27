@@ -1,6 +1,6 @@
 
 import lowdb from 'lowdb'
-import storage from '../../../lowdb-adapter-aws-s3'
+import storage from '../../lowdb-adapter-aws-s3'
 import crypto from 'crypto'
 
 const algorithm = 'AES-256-CTR'
